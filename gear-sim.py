@@ -214,7 +214,7 @@ gearIndex = [
     "Sword",
 ]
 indexOfFirstStat = 5
-gearFilePolar = pl.read_csv('C:\\Users\Tobi\\Documents\\GitHub\\Warrior-Threat-Gear-Script\\testgear.csv', has_header=True)
+gearFilePolar = pl.read_csv('C:\\Users\Tobi\\Documents\\GitHub\\Warrior-Threat-Gear-Script\\gear.csv', has_header=True)
 """
 0-"item_id"
 1-"name"
@@ -718,10 +718,10 @@ generateGearSets()
 
 def resultSort(e):
     return e["tps"]
-resultsTPS.sort(key=resultSort)
+resultsTPS.sort(reverse=True,key=resultSort)
 
 print("**************************************")
-for results in resultsTPS:
+for results in resultsTPS[:5]:
     print("tps: ",results["tps"])
     print("hit: ",results["hit"])
     print(results["items"])
