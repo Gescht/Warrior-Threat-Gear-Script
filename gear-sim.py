@@ -215,7 +215,7 @@ gearIndex = [
     "Sword",
 ]
 indexOfFirstStat = 5
-gearFilePolar = pl.read_csv('C:\\Users\Tobi\\Documents\\GitHub\\Warrior-Threat-Gear-Script\\gear.csv', has_header=True)
+gearFilePolar = pl.read_csv('C:\\Users\\Tobi\\Documents\\GitHub\\Warrior-Threat-Gear-Script\\gear.csv', has_header=True)
 """
 0-"item_id"
 1-"name"
