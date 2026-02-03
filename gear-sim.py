@@ -344,7 +344,7 @@ def addItemsToGearTotal(*args):
     print("new gearset -----------------------------------------")
     for item in args:
         gear["name"] += (item[gearIndex.index("name")]+"\n")
-        print(gear["name"])
+        #print(gear["name"])
         #loop through all the stats
         for index in range(indexOfFirstStat,(len(gearIndex))):
             if item[index] is None:
@@ -668,6 +668,13 @@ def generateGearSets():
                                                             for ranged, df in enumerate(gearRanged):
                                                                 addItemsToGearTotal(gearHead[head],gearNeck[neck],gearShoulder[shoulder],gearBack[back],gearChest[chest],gearWrist[wrist],gearHands[hands],gearWaist[waist],gearLegs[legs],gearFeet[feet],gearFinger[fingers][0],gearFinger[fingers][1],gearTrinket[trinkets][0],gearTrinket[trinkets][1],gearWeapon[weapon],gearOffHand[offhand],gearRanged[ranged])
                                                                 print(gear["name"])
+                                                                #calculate the total stats including stats from gear
+                                                                calcTotalStatsWithGear()
+                                                                #convert character stats into stats used by the threat calc
+                                                                prepCalcStats()
+                                                                #print the threat per second with the current gear set
+                                                                print("TPS ",calcThreatPerSecond())
+                                                                #reset all stats to prepare for the next gearset
                                                                 resetTotalGear()
 
 sortRawGear()
@@ -677,8 +684,3 @@ combineFingerAndTrinket()
 calcTotalStatsWithoutGear()
 
 generateGearSets()
-
-calcTotalStatsWithGear()
-prepCalcStats()
-
-print("TPS ",calcThreatPerSecond())
