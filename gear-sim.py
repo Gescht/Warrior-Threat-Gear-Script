@@ -156,6 +156,7 @@ WeaponMax = 0
 WeaponSpeed = 0
 GlancingMod = 0
 HeroicStrikePercentage = 0
+Boss_Armor = 0
 Boss_ArmorDamageReduction = 0
 BossDodge = 0
 Boss_Avoidance = 0
@@ -420,29 +421,29 @@ def resetTotalGear():
     }
 
 def calcTotalStatsWithGear():
-    total["stam"] = getBaseStatWithKings("stam")
+            #total["stam"] = getBaseStatWithKings("stam")
     total["str"] = getBaseStatWithKings("str")
     total["agi"] = getBaseStatWithKings("agi")
-    total["hp"] = getTotalStatsHp()
-    if settings["tauren"]:
-        total["hp"] = int(total["hp"]*1.05)
-    total["armor"] = getTotalStatsArmor()
+            #total["hp"] = getTotalStatsHp()
+            #if settings["tauren"]:
+            #    total["hp"] = int(total["hp"]*1.05)
+            #total["armor"] = getTotalStatsArmor()
     total["crit"] = totalPreGear["crit"]+getGearStat("crit")+total["agi"]/20
     total["hit"] = totalPreGear["hit"]+getGearStat("hit")
     total["ap"] = totalPreGear["ap"]+getGearStat("ap")+total["str"]*2
     total["arp"] = totalPreGear["arp"]+getGearStat("arp")
     total["haste"] = getTotalStatsHaste()
     total["block_value"] = int((totalPreGear["block_value"]+getGearStat("block_value")+int(total["str"]/20))*(0.03*talents["toughness"]+1))
-    total["dps"] = getGearStat("dps")+total["ap"]/14
+        #total["dps"] = getGearStat("dps")+total["ap"]/14
     total["speed"] = gear["speed"]
     total["damage_min"] = getGearStat("damage_min")
     total["damage_max"] = getGearStat("damage_max")
-    #total["Axe"] = total["Axe"]+getGearStat("Axe")
-    #total["Dagger"] = total["Dagger"]+getGearStat("Dagger")
-    #total["Fist Weapon"] = total["Fist Weapon"]+getGearStat("Fist Weapon")
-    #total["Mace"] = total["Mace"]+getGearStat("Mace")
-    total["Sword"] = totalPreGear["Sword"]+getGearStat("Sword")
-    total["weaponskill"] = totalPreGear["Sword"]
+        #total["Axe"] = total["Axe"]+getGearStat("Axe")
+        #total["Dagger"] = total["Dagger"]+getGearStat("Dagger")
+        #total["Fist Weapon"] = total["Fist Weapon"]+getGearStat("Fist Weapon")
+        #total["Mace"] = total["Mace"]+getGearStat("Mace")
+        #total["Sword"] = totalPreGear["Sword"]+getGearStat("Sword")
+    total["weaponskill"] = totalPreGear["Sword"]+getGearStat("Sword")
 
 def prepCalcStats():
     global AttackPower
@@ -460,6 +461,7 @@ def prepCalcStats():
     global GlancingMod
     global HeroicStrikePercentage
     global ThunderfuryUsed
+    global Boss_Armor
     global Boss_ArmorDamageReduction
     global BossDodge
     global Boss_Avoidance
@@ -480,7 +482,8 @@ def prepCalcStats():
     GlancingMod = 0.4*(0.95-((0 if total["weaponskill"] >= 15 else 15-total["weaponskill"])*0.02))-0.4+1
     HeroicStrikePercentage = 0.8
     ThunderfuryUsed = True
-    Boss_ArmorDamageReduction = settings["bossArmor"]/(settings["bossArmor"]+5500)
+    Boss_Armor = (settings["bossArmor"]-total["arp"]) if (settings["bossArmor"]-total["arp"]) >= 0 else 0
+    Boss_ArmorDamageReduction = Boss_Armor/(Boss_Armor+5500)
     BossDodge = 0.05-total["weaponskill"]*0.0005
     Boss_Avoidance = (0 if Hit <= 0 else Hit)+BossDodge+0.05    
     Boss_SpellAvoidance = 0.15
