@@ -184,7 +184,7 @@ gearIndex = [
     "Sword",
 ]
 indexOfFirstStat = 5
-gearFilePolar = pl.read_csv('C:\\Users\\Tobi\\Desktop\\testgear.csv', has_header=True)
+gearFilePolar = pl.read_csv('C:\\Users\Tobi\\Documents\\GitHub\\Warrior-Threat-Gear-Script\\testgear.csv', has_header=True)
 """
 0-"item_id"
 1-"name"
@@ -667,8 +667,9 @@ def generateGearSets():
                                                         for offhand, df in enumerate(gearOffHand):
                                                             for ranged, df in enumerate(gearRanged):
                                                                 addItemsToGearTotal(gearHead[head],gearNeck[neck],gearShoulder[shoulder],gearBack[back],gearChest[chest],gearWrist[wrist],gearHands[hands],gearWaist[waist],gearLegs[legs],gearFeet[feet],gearFinger[fingers][0],gearFinger[fingers][1],gearTrinket[trinkets][0],gearTrinket[trinkets][1],gearWeapon[weapon],gearOffHand[offhand],gearRanged[ranged])
+                                                                print(gear["name"])
                                                                 resetTotalGear()
-------------------------
+
 sortRawGear()
 
 combineFingerAndTrinket()
