@@ -11,7 +11,33 @@ total = {
     "hit": 0,
     "ap": 0,
     "arp": 0,
-    "haste": 0,
+    "haste": 1,
+    "block_chance": 0,
+    "block_value": 0,
+    "def": 0,
+    "dodge": 0,
+    "parry": 0.08,
+    "dps": 0,
+    "speed": 0,
+    "damage_min": 0,
+    "damage_max": 0,
+    "Axe": 0,
+    "Dagger": 0,
+    "Fist Weapon": 0,
+    "Mace": 0,
+    "Sword": 0,
+    }
+totalPreGear = {
+    "hp": 0,
+    "stam": 0,
+    "str": 0,
+    "armor": 0,
+    "agi": 0,
+    "crit": 0,
+    "hit": 0,
+    "ap": 0,
+    "arp": 0,
+    "haste": 1,
     "block_chance": 0,
     "block_value": 0,
     "def": 0,
@@ -300,48 +326,46 @@ def getMultipliedTotalHaste(sList=statListsNoGear):
     return haste
 
 def getTotalStatsArmor():
-    totalStat = int(gear["armor"]*(0.02*talents["toughness"]+1))
-    totalStat = totalStat + total["armor"]
-    totalStat = int(totalStat + total["agi"]*2)
-    return totalStat
+    returnArmor = int(gear["armor"]*(0.02*talents["toughness"]+1)) + totalPreGear["armor"]
+    returnArmor = int(returnArmor + total["agi"]*2)
+    return returnArmor
 
 def getTotalStatsHaste():
     if "haste" in gear:
-        return total["haste"]*gear["haste"]
+        return totalPreGear["haste"]*gear["haste"]
     else:
-        return total["haste"]
+        return totalPreGear["haste"]
     
 def getTotalStatsHp():    
     if "hp" in gear:
-        return int(total["hp"]+total["stam"]*10+getGearStat("hp"))
+        return int(totalPreGear["hp"]+total["stam"]*10+getGearStat("hp"))
     else:
-        return int(total["hp"]+total["stam"]*10)
+        return int(totalPreGear["hp"]+total["stam"]*10)
 
 def getBaseStatWithKings(stat):
-    return int((total[stat]+getGearStat(stat))*1.1)
+    return int((totalPreGear[stat]+getGearStat(stat))*1.1)
 
 def calcTotalStatsWithoutGear():
-    total["stam"] = getAddedTotalStats("stam")
-    total["str"] = getAddedTotalStats("str")
-    total["agi"] = getAddedTotalStats("agi")
-    total["hp"] = getAddedTotalStats("hp")
-    total["armor"] = getAddedTotalStats("armor")
-    total["crit"] = getAddedTotalStats("crit")
-    total["hit"] = getAddedTotalStats("hit")
-    total["ap"] = getAddedTotalStats("ap")
-    total["arp"] = getAddedTotalStats("arp")
-    total["haste"] = getMultipliedTotalHaste()
-    total["block_value"] = getAddedTotalStats("block_value")
+    totalPreGear["stam"] = getAddedTotalStats("stam")
+    totalPreGear["str"] = getAddedTotalStats("str")
+    totalPreGear["agi"] = getAddedTotalStats("agi")
+    totalPreGear["hp"] = getAddedTotalStats("hp")
+    totalPreGear["armor"] = getAddedTotalStats("armor")
+    totalPreGear["crit"] = getAddedTotalStats("crit")
+    totalPreGear["hit"] = getAddedTotalStats("hit")
+    totalPreGear["ap"] = getAddedTotalStats("ap")
+    totalPreGear["arp"] = getAddedTotalStats("arp")
+    totalPreGear["haste"] = getMultipliedTotalHaste()
+    totalPreGear["block_value"] = getAddedTotalStats("block_value")
     #total["Axe"] = getAddedTotalStats("Axe")
     #total["Dagger"] = getAddedTotalStats("Dagger")
     #total["Fist Weapon"] = getAddedTotalStats("Fist Weapon")
     #total["Mace"] = getAddedTotalStats("Mace")
-    total["Sword"] = getAddedTotalStats("Sword")
+    totalPreGear["Sword"] = getAddedTotalStats("Sword")
 
 def addItemsToGearTotal(*args):
     global gear
     #loop through all the items 
-    print("new gearset -----------------------------------------")
     for item in args:
         gear["name"] += (item[gearIndex.index("name")]+"\n")
         #print(gear["name"])
@@ -399,12 +423,12 @@ def calcTotalStatsWithGear():
     if settings["tauren"]:
         total["hp"] = int(total["hp"]*1.05)
     total["armor"] = getTotalStatsArmor()
-    total["crit"] = total["crit"]+getGearStat("crit")+total["agi"]/20
-    total["hit"] = total["hit"]+getGearStat("hit")
-    total["ap"] = total["ap"]+getGearStat("ap")+total["str"]*2
-    total["arp"] = total["arp"]+getGearStat("arp")
+    total["crit"] = totalPreGear["crit"]+getGearStat("crit")+total["agi"]/20
+    total["hit"] = totalPreGear["hit"]+getGearStat("hit")
+    total["ap"] = totalPreGear["ap"]+getGearStat("ap")+total["str"]*2
+    total["arp"] = totalPreGear["arp"]+getGearStat("arp")
     total["haste"] = getTotalStatsHaste()
-    total["block_value"] = int((total["block_value"]+getGearStat("block_value")+int(total["str"]/20))*(0.03*talents["toughness"]+1))
+    total["block_value"] = int((totalPreGear["block_value"]+getGearStat("block_value")+int(total["str"]/20))*(0.03*talents["toughness"]+1))
     total["dps"] = getGearStat("dps")+total["ap"]/14
     total["speed"] = gear["speed"]
     total["damage_min"] = getGearStat("damage_min")
@@ -413,8 +437,8 @@ def calcTotalStatsWithGear():
     #total["Dagger"] = total["Dagger"]+getGearStat("Dagger")
     #total["Fist Weapon"] = total["Fist Weapon"]+getGearStat("Fist Weapon")
     #total["Mace"] = total["Mace"]+getGearStat("Mace")
-    total["Sword"] = total["Sword"]+getGearStat("Sword")
-    total["weaponskill"] = total["Sword"]
+    total["Sword"] = totalPreGear["Sword"]+getGearStat("Sword")
+    total["weaponskill"] = totalPreGear["Sword"]
 
 def prepCalcStats():
     global AttackPower
@@ -666,6 +690,7 @@ def generateGearSets():
                                                     for weapon, df in enumerate(gearWeapon):
                                                         for offhand, df in enumerate(gearOffHand):
                                                             for ranged, df in enumerate(gearRanged):
+                                                                print("new gearset -----------------------------------------")
                                                                 addItemsToGearTotal(gearHead[head],gearNeck[neck],gearShoulder[shoulder],gearBack[back],gearChest[chest],gearWrist[wrist],gearHands[hands],gearWaist[waist],gearLegs[legs],gearFeet[feet],gearFinger[fingers][0],gearFinger[fingers][1],gearTrinket[trinkets][0],gearTrinket[trinkets][1],gearWeapon[weapon],gearOffHand[offhand],gearRanged[ranged])
                                                                 print(gear["name"])
                                                                 #calculate the total stats including stats from gear
@@ -674,6 +699,7 @@ def generateGearSets():
                                                                 prepCalcStats()
                                                                 #print the threat per second with the current gear set
                                                                 print("TPS ",calcThreatPerSecond())
+                                                                print("new gearset +++++++++++++++++++++++++++++++++++++++++")
                                                                 #reset all stats to prepare for the next gearset
                                                                 resetTotalGear()
 
