@@ -680,21 +680,21 @@ def calcThreatPerSecond():
 
 def generateGearSets():
     global resultsTPS
-    for head, df in enumerate(gearHead):
-        for neck, df in enumerate(gearNeck):
-            for shoulder, df in enumerate(gearShoulder):
-                for back, df in enumerate(gearBack):
-                    for chest, df in enumerate(gearChest):
-                        for wrist, df in enumerate(gearWrist):
-                            for hands, df in enumerate(gearHands):
-                                for waist, df in enumerate(gearWaist):
-                                    for legs, df in enumerate(gearLegs):
-                                        for feet, df in enumerate(gearFeet):
-                                            for fingers, df in enumerate(gearFinger):
-                                                for trinkets, df in enumerate(gearTrinket):
-                                                    for weapon, df in enumerate(gearWeapon):
-                                                        for offhand, df in enumerate(gearOffHand):
-                                                            for ranged, df in enumerate(gearRanged):
+    for head, _ in enumerate(gearHead):
+        for neck, _ in enumerate(gearNeck):
+            for shoulder, _ in enumerate(gearShoulder):
+                for back, _ in enumerate(gearBack):
+                    for chest, _ in enumerate(gearChest):
+                        for wrist, _ in enumerate(gearWrist):
+                            for hands, _ in enumerate(gearHands):
+                                for waist, _ in enumerate(gearWaist):
+                                    for legs, _ in enumerate(gearLegs):
+                                        for feet, _ in enumerate(gearFeet):
+                                            for fingers, _ in enumerate(gearFinger):
+                                                for trinkets, _ in enumerate(gearTrinket):
+                                                    for weapon, _ in enumerate(gearWeapon):
+                                                        for offhand, _ in enumerate(gearOffHand):
+                                                            for ranged, _ in enumerate(gearRanged):
                                                                 addItemsToGearTotal(gearHead[head],gearNeck[neck],gearShoulder[shoulder],gearBack[back],gearChest[chest],gearWrist[wrist],gearHands[hands],gearWaist[waist],gearLegs[legs],gearFeet[feet],gearFinger[fingers][0],gearFinger[fingers][1],gearTrinket[trinkets][0],gearTrinket[trinkets][1],gearWeapon[weapon],gearOffHand[offhand],gearRanged[ranged])
 
                                                                 #calculate the total stats including stats from gear
