@@ -1,6 +1,10 @@
 from itertools import combinations
 import polars as pl
 
+resultsTPS = []
+"""
+[ {"items": string,"tps": float,}, ]
+"""
 total = {
     "hp": 0,
     "stam": 0,
@@ -675,6 +679,7 @@ def calcThreatPerSecond():
         )
 
 def generateGearSets():
+    global resultsTPS
     for head, df in enumerate(gearHead):
         for neck, df in enumerate(gearNeck):
             for shoulder, df in enumerate(gearShoulder):
@@ -690,16 +695,16 @@ def generateGearSets():
                                                     for weapon, df in enumerate(gearWeapon):
                                                         for offhand, df in enumerate(gearOffHand):
                                                             for ranged, df in enumerate(gearRanged):
-                                                                print("new gearset -----------------------------------------")
                                                                 addItemsToGearTotal(gearHead[head],gearNeck[neck],gearShoulder[shoulder],gearBack[back],gearChest[chest],gearWrist[wrist],gearHands[hands],gearWaist[waist],gearLegs[legs],gearFeet[feet],gearFinger[fingers][0],gearFinger[fingers][1],gearTrinket[trinkets][0],gearTrinket[trinkets][1],gearWeapon[weapon],gearOffHand[offhand],gearRanged[ranged])
-                                                                print(gear["name"])
+
                                                                 #calculate the total stats including stats from gear
                                                                 calcTotalStatsWithGear()
+
                                                                 #convert character stats into stats used by the threat calc
                                                                 prepCalcStats()
-                                                                #print the threat per second with the current gear set
-                                                                print("TPS ",calcThreatPerSecond())
-                                                                print("new gearset +++++++++++++++++++++++++++++++++++++++++")
+
+                                                                resultsTPS.append({"items":gear["name"],"tps":calcThreatPerSecond(),"hit":Hit})
+
                                                                 #reset all stats to prepare for the next gearset
                                                                 resetTotalGear()
 
@@ -710,3 +715,14 @@ combineFingerAndTrinket()
 calcTotalStatsWithoutGear()
 
 generateGearSets()
+
+def resultSort(e):
+    return e["tps"]
+resultsTPS.sort(key=resultSort)
+
+print("**************************************")
+for results in resultsTPS:
+    print("tps: ",results["tps"])
+    print("hit: ",results["hit"])
+    print(results["items"])
+    print("**********")
